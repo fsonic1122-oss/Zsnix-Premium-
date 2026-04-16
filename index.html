@@ -1,183 +1,138 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zsnix Studio - Pro Web</title>
+    <title>Zsnix Studio - Dynamic Store</title>
     <style>
-        :root {
-            --bg: #0a0c10;
-            --glass: rgba(255, 255, 255, 0.08);
-            --accent: #00f2ff;
-            --owner-color: #ff007a;
-            --text: #ffffff;
-        }
+        :root { --bg: #0d1117; --glass: #161b22; --accent: #00f2ff; --owner: #ff007a; }
+        body { background: var(--bg); color: white; font-family: sans-serif; margin: 0; padding-bottom: 50px; }
+        
+        /* Header */
+        .header { padding: 15px; background: #010409; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #30363d; position: sticky; top: 0; z-index: 100; }
+        .balance { border: 1px solid #30363d; padding: 5px 12px; border-radius: 6px; font-size: 14px; }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: sans-serif;
-            margin: 0;
-            overflow-x: hidden;
-        }
-
-        /* Login Overlay */
-        #login-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-        }
-
-        .login-box {
-            background: var(--glass);
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-            text-align: center;
-            width: 80%;
-            max-width: 300px;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border: 1px solid #333;
-            background: #111;
-            color: white;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
+        /* Login */
+        #login-screen { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+        .login-box { background: var(--glass); padding: 30px; border-radius: 15px; text-align: center; width: 85%; max-width: 320px; border: 1px solid #30363d; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #30363d; background: #0d1117; color: white; box-sizing: border-box; }
+        .btn { width: 100%; padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .btn-user { background: var(--accent); color: #000; }
-        .btn-owner { background: var(--owner-color); color: #fff; }
+        .btn-owner { background: var(--owner); color: #fff; }
 
-        /* Main Content */
-        .header {
-            padding: 15px;
-            background: rgba(0,0,0,0.8);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #222;
-        }
+        /* Admin Panel */
+        #admin-panel { background: #1c101d; border: 1px solid var(--owner); margin: 15px; padding: 15px; border-radius: 12px; display: none; }
 
+        /* Grid Layout */
         .container { padding: 15px; }
-
-        .admin-panel {
-            background: rgba(255, 0, 122, 0.1);
-            border: 1px dashed var(--owner-color);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            display: none; /* Hide by default */
-        }
-
-        .variation-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-
-        .v-card {
-            background: var(--glass);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 10px;
-            text-align: center;
-            text-decoration: none;
-            color: white;
-        }
-
-        .v-card img { width: 40px; height: 40px; border-radius: 8px; }
-        .v-price { color: #fbbf24; font-size: 12px; display: block; margin-top: 5px; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .card { background: var(--glass); border-radius: 12px; padding: 10px; text-align: center; border: 1px solid #30363d; position: relative; }
+        .card img { width: 45px; height: 45px; border-radius: 10px; margin-bottom: 5px; }
+        .card-name { font-size: 10px; display: block; height: 25px; overflow: hidden; }
+        .card-price { color: #fbbf24; font-size: 11px; font-weight: bold; }
+        .buy-link { text-decoration: none; color: white; }
+        .delete-btn { position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 10px; border: none; display: none; }
     </style>
 </head>
 <body>
 
 <div id="login-screen">
     <div class="login-box">
-        <h2 style="color: var(--accent);">ZSNIX LOGIN</h2>
-        <input type="text" id="username" placeholder="နာမည်ရိုက်ပါ">
-        <input type="password" id="password" placeholder="Password (Owner သာ)">
-        <button class="btn-user" onclick="login('user')">User အနေနဲ့ဝင်မည်</button>
-        <button class="btn-owner" onclick="login('owner')">Owner အနေနဲ့ဝင်မည်</button>
+        <h2 style="color: var(--accent);">ZSNIX STUDIO</h2>
+        <input type="text" id="username" placeholder="Enter Name">
+        <input type="password" id="password" placeholder="Password (for Owner)">
+        <button class="btn btn-user" onclick="handleLogin('user')">User Login</button>
+        <button class="btn btn-owner" onclick="handleLogin('owner')">Owner Login</button>
     </div>
 </div>
 
 <div class="header">
-    <div id="display-name">Guest</div>
-    <div style="color: var(--accent); font-weight: bold;">ZSNIX STORE</div>
-    <button onclick="location.reload()" style="width: auto; padding: 5px 10px; font-size: 10px;">Logout</button>
+    <div class="balance">0 ကျပ်</div>
+    <div id="user-display" style="font-weight: bold; color: var(--accent);">Guest</div>
+    <button onclick="location.reload()" style="background:none; border:1px solid #444; color:#888; border-radius:4px; font-size:10px;">Logout</button>
+</div>
+
+<div id="admin-panel">
+    <h4 style="margin:0 0 10px 0; color:var(--owner);">Owner Controls</h4>
+    <input type="text" id="new-app-name" placeholder="App Name (e.g. Netflix)">
+    <input type="text" id="new-app-price" placeholder="Price (e.g. 5000)">
+    <input type="text" id="new-app-img" placeholder="Image URL (Link)">
+    <button class="btn-owner" style="padding:8px; border-radius:5px; width:100%;" onclick="addApp()">+ ပစ္စည်းအသစ်ထည့်မည်</button>
+    <p style="font-size: 10px; color: #888; margin-top: 10px;">* ပစ္စည်းဖျက်ချင်ရင် ကဒ်ဘေးက (x) ကိုနှိပ်ပါ။</p>
 </div>
 
 <div class="container">
-    <div id="admin-panel" class="admin-panel">
-        <h4 style="margin: 0; color: var(--owner-color);">Owner Dashboard</h4>
-        <p style="font-size: 12px;">ဈေးနှုန်းပြင်ရန် သို့မဟုတ် ပစ္စည်းတင်ရန်</p>
-        <button style="background: #333; color: white; font-size: 11px;">+ ပစ္စည်းအသစ်ထည့်မည်</button>
-    </div>
-
-    <h3 style="font-size: 14px; border-left: 3px solid var(--accent); padding-left: 10px;">Available Premium Apps</h3>
-    
-    <div class="variation-grid">
-        <a href="https://t.me/Zsnix_Rix" class="v-card">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg">
-            <span style="font-size: 10px; display: block;">TG Premium</span>
-            <span class="v-price">53,000 Ks</span>
-        </a>
-        <a href="https://t.me/Zsnix_Rix" class="v-card">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png">
-            <span style="font-size: 10px; display: block;">Netflix</span>
-            <span class="v-price">5,500 Ks</span>
-        </a>
-        <a href="https://t.me/Zsnix_Rix" class="v-card">
-            <img src="https://static.vecteezy.com/system/resources/previews/016/716/454/original/capcut-icon-free-png.png">
-            <span style="font-size: 10px; display: block;">CapCut Pro</span>
-            <span class="v-price">4,500 Ks</span>
-        </a>
-    </div>
+    <h3 style="font-size: 14px; border-left: 3px solid var(--accent); padding-left: 10px;">PREMIUM APPS</h3>
+    <div class="grid" id="product-grid">
+        </div>
 </div>
 
 <script>
-    function login(role) {
-        const user = document.getElementById('username').value;
+    let currentRole = 'user';
+    let apps = JSON.parse(localStorage.getItem('zsnix_apps')) || [
+        { name: "Telegram Premium", price: "53000", img: "https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" },
+        { name: "Netflix Premium", price: "5500", img: "https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" }
+    ];
+
+    function handleLogin(role) {
+        const name = document.getElementById('username').value;
         const pass = document.getElementById('password').value;
+        if(!name) return alert("နာမည်ထည့်ပါ");
 
-        if (user === "") {
-            alert("နာမည်ရိုက်ထည့်ပါ!");
-            return;
-        }
-
-        if (role === 'owner') {
-            if (pass === "zsnix123") { // Owner Password က zsnix123 ပါ
-                document.getElementById('login-screen').style.display = 'none';
+        if(role === 'owner') {
+            if(pass === "zsnix123") {
+                currentRole = 'owner';
                 document.getElementById('admin-panel').style.display = 'block';
-                document.getElementById('display-name').innerText = "Owner: " + user;
-            } else {
-                alert("Owner Password မှားနေပါတယ်!");
-            }
-        } else {
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('display-name').innerText = "User: " + user;
+            } else { return alert("Password မှားယွင်းနေပါသည်။"); }
+        }
+        
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('user-display').innerText = name;
+        renderApps();
+    }
+
+    function renderApps() {
+        const grid = document.getElementById('product-grid');
+        grid.innerHTML = '';
+        apps.forEach((app, index) => {
+            grid.innerHTML += `
+                <div class="card">
+                    <button class="delete-btn" style="display:${currentRole === 'owner' ? 'block' : 'none'}" onclick="deleteApp(${index})">x</button>
+                    <a href="https://t.me/Zsnix_Rix?text=${app.name} ဝယ်ချင်လို့ပါ" class="buy-link">
+                        <img src="${app.img}">
+                        <span class="card-name">${app.name}</span>
+                        <span class="card-price">${app.price} Ks</span>
+                    </a>
+                </div>
+            `;
+        });
+    }
+
+    function addApp() {
+        const name = document.getElementById('new-app-name').value;
+        const price = document.getElementById('new-app-price').value;
+        const img = document.getElementById('new-app-img').value || "https://via.placeholder.com/100";
+
+        if(name && price) {
+            apps.push({ name, price, img });
+            localStorage.setItem('zsnix_apps', JSON.stringify(apps));
+            renderApps();
+            alert("ပစ္စည်းအသစ် ထည့်ပြီးပါပြီ။");
         }
     }
+
+    function deleteApp(index) {
+        if(confirm("ဖျက်မှာ သေချာပါသလား?")) {
+            apps.splice(index, 1);
+            localStorage.setItem('zsnix_apps', JSON.stringify(apps));
+            renderApps();
+        }
+    }
+
+    // Initial Load
+    renderApps();
 </script>
 
 </body>
 </html>
+
