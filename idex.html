@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zsnix Rix - Premium Store</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --text-color: #f8fafc;
+            --price-color: #fbbf24;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 50px;
+        }
+
+        header {
+            background: #1e293b;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #334155;
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 18px;
+            margin-bottom: 12px;
+            object-fit: cover;
+        }
+
+        .app-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .price {
+            color: var(--price-color);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .buy-btn {
+            background: var(--accent-color);
+            color: #0f172a;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .buy-btn:active {
+            transform: scale(0.95);
+            opacity: 0.9;
+        }
+
+        /* Footer Info */
+        .footer-text {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>ZSNIX RIX PREMIUM</header>
+
+<div class="container">
+    <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
+        <div class="app-name">Netflix Premium</div>
+        <div class="price">5,500 Ks</div>
+        <a href="https://t.me/Zsnix_Rix?text=Hello, Netflix ဝယ်ချင်လို့ပါ" class="buy-btn">ဝယ်ယူမည်</a>
+    </div>
+
+    <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube">
+        <div class="app-name">YouTube Premium</div>
+        <div class="price">3,500 Ks</div>
+        <a href="https://t.me/Zsnix_Rix?text=Hello, YouTube Premium ဝယ်ချင်လို့ပါ" class="buy-btn">ဝယ်ယူမည်</a>
+    </div>
+
+    <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify">
+        <div class="app-name">Spotify Premium</div>
+        <div class="price">2,500 Ks</div>
+        <a href="https://t.me/Zsnix_Rix?text=Hello, Spotify ဝယ်ချင်လို့ပါ" class="buy-btn">ဝယ်ယူမည်</a>
+    </div>
+
+    <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Canva_icon_2021.svg" alt="Canva">
+        <div class="app-name">Canva Pro</div>
+        <div class="price">1,500 Ks</div>
+        <a href="https://t.me/Zsnix_Rix?text=Hello, Canva Pro ဝယ်ချင်လို့ပါ" class="buy-btn">ဝယ်ယူမည်</a>
+    </div>
+</div>
+
+<div class="footer-text">© 2026 Zsnix Rix Store. All rights reserved.</div>
+
+</body>
+</html>
+
