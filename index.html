@@ -3,51 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zsnix Rix - All-in-One Premium Store</title>
+    <title>Zsnix Studio - Pro Web</title>
     <style>
         :root {
-            --bg: #0b0f19;
-            --card-bg: rgba(255, 255, 255, 0.06);
-            --accent: #0ea5e9;
+            --bg: #0a0c10;
+            --glass: rgba(255, 255, 255, 0.08);
+            --accent: #00f2ff;
+            --owner-color: #ff007a;
             --text: #ffffff;
-            --price: #fbbf24;
         }
 
         body {
             background-color: var(--bg);
             color: var(--text);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: sans-serif;
             margin: 0;
-            padding: 15px;
-            padding-bottom: 50px;
+            overflow-x: hidden;
         }
 
-        .header {
-            text-align: center;
-            padding: 20px 0;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--accent);
-            letter-spacing: 1px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 20px;
-        }
-
-        .category-title {
-            font-size: 1rem;
-            margin: 25px 0 15px 0;
+        /* Login Overlay */
+        #login-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 10px;
-            color: #cbd5e1;
+            justify-content: center;
+            z-index: 2000;
         }
 
-        .category-title::before {
-            content: "";
-            width: 4px;
-            height: 18px;
-            background: var(--accent);
-            border-radius: 10px;
+        .login-box {
+            background: var(--glass);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #111;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .btn-user { background: var(--accent); color: #000; }
+        .btn-owner { background: var(--owner-color); color: #fff; }
+
+        /* Main Content */
+        .header {
+            padding: 15px;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #222;
+        }
+
+        .container { padding: 15px; }
+
+        .admin-panel {
+            background: rgba(255, 0, 122, 0.1);
+            border: 1px dashed var(--owner-color);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none; /* Hide by default */
         }
 
         .variation-grid {
@@ -57,144 +95,89 @@
         }
 
         .v-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--glass);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 12px;
-            padding: 12px 8px;
+            padding: 10px;
             text-align: center;
-            position: relative;
             text-decoration: none;
             color: white;
-            transition: 0.2s;
         }
 
-        .v-card:active { transform: scale(0.95); background: rgba(255,255,255,0.12); }
-
-        .badge {
-            position: absolute;
-            top: 4px;
-            left: 4px;
-            background: #ef4444;
-            color: white;
-            font-size: 9px;
-            padding: 1px 4px;
-            border-radius: 4px;
-        }
-
-        .v-card img {
-            width: 35px;
-            height: 35px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            object-fit: cover;
-        }
-
-        .v-name {
-            font-size: 10px;
-            display: block;
-            height: 28px;
-            line-height: 1.3;
-            margin-bottom: 4px;
-            color: #e2e8f0;
-        }
-
-        .v-price {
-            font-size: 11px;
-            font-weight: bold;
-            color: var(--price);
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 11px;
-            color: #64748b;
-        }
+        .v-card img { width: 40px; height: 40px; border-radius: 8px; }
+        .v-price { color: #fbbf24; font-size: 12px; display: block; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-<div class="header">ZSNIX RIX STORE</div>
-
-<div class="category-title">Telegram Services</div>
-<div class="variation-grid">
-    <a href="https://t.me/Zsnix_Rix?text=TG Premium 3 Months ဝယ်ချင်လို့ပါ" class="v-card">
-        <div class="badge">1 🎁</div>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="TG">
-        <span class="v-name">Premium 3 Months</span>
-        <span class="v-price">53000 ကျပ်</span>
-    </a>
-    <a href="https://t.me/Zsnix_Rix?text=TG Premium 6 Months ဝယ်ချင်လို့ပါ" class="v-card">
-        <div class="badge">1 🎁</div>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="TG">
-        <span class="v-name">Premium 6 Months</span>
-        <span class="v-price">73000 ကျပ်</span>
-    </a>
-    <a href="https://t.me/Zsnix_Rix?text=TG Premium 1 Year ဝယ်ချင်လို့ပါ" class="v-card">
-        <div class="badge">1 🎁</div>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="TG">
-        <span class="v-name">Premium 12 Months</span>
-        <span class="v-price">135000 ကျပ်</span>
-    </a>
+<div id="login-screen">
+    <div class="login-box">
+        <h2 style="color: var(--accent);">ZSNIX LOGIN</h2>
+        <input type="text" id="username" placeholder="နာမည်ရိုက်ပါ">
+        <input type="password" id="password" placeholder="Password (Owner သာ)">
+        <button class="btn-user" onclick="login('user')">User အနေနဲ့ဝင်မည်</button>
+        <button class="btn-owner" onclick="login('owner')">Owner အနေနဲ့ဝင်မည်</button>
+    </div>
 </div>
 
-<div class="category-title">Video Editing (CapCut)</div>
-<div class="variation-grid">
-    <a href="https://t.me/Zsnix_Rix?text=CapCut 1 Month ဝယ်ချင်လို့ပါ" class="v-card">
-        <div class="badge">1 🎁</div>
-        <img src="https://e7.pngegg.com/pngimages/113/344/png-clipart-capcut-hd-logo.png" alt="CapCut">
-        <span class="v-name">CapCut Pro 1 Month</span>
-        <span class="v-price">4500 ကျပ်</span>
-    </a>
-    <a href="https://t.me/Zsnix_Rix?text=CapCut 1 Year ဝယ်ချင်လို့ပါ" class="v-card">
-        <div class="badge">1 🎁</div>
-        <img src="https://e7.pngegg.com/pngimages/113/344/png-clipart-capcut-hd-logo.png" alt="CapCut">
-        <span class="v-name">CapCut Pro 1 Year</span>
-        <span class="v-price">35000 ကျပ်</span>
-    </a>
+<div class="header">
+    <div id="display-name">Guest</div>
+    <div style="color: var(--accent); font-weight: bold;">ZSNIX STORE</div>
+    <button onclick="location.reload()" style="width: auto; padding: 5px 10px; font-size: 10px;">Logout</button>
 </div>
 
-<div class="category-title">Alight Motion</div>
-<div class="variation-grid">
-    <a href="https://t.me/Zsnix_Rix?text=Alight Motion 1 Month ဝယ်ချင်လို့ပါ" class="v-card">
-        <div class="badge">1 🎁</div>
-        <img src="https://static.wikia.nocookie.net/logopedia/images/e/e0/Alight_Motion_App_Icon.png" alt="AM">
-        <span class="v-name">AM Pro 1 Month</span>
-        <span class="v-price">3000 ကျပ်</span>
-    </a>
-    <a href="https://t.me/Zsnix_Rix?text=Alight Motion 1 Year ဝယ်ချင်လို့ပါ" class="v-card">
-        <div class="badge">1 🎁</div>
-        <img src="https://static.wikia.nocookie.net/logopedia/images/e/e0/Alight_Motion_App_Icon.png" alt="AM">
-        <span class="v-name">AM Pro 1 Year</span>
-        <span class="v-price">18000 ကျပ်</span>
-    </a>
+<div class="container">
+    <div id="admin-panel" class="admin-panel">
+        <h4 style="margin: 0; color: var(--owner-color);">Owner Dashboard</h4>
+        <p style="font-size: 12px;">ဈေးနှုန်းပြင်ရန် သို့မဟုတ် ပစ္စည်းတင်ရန်</p>
+        <button style="background: #333; color: white; font-size: 11px;">+ ပစ္စည်းအသစ်ထည့်မည်</button>
+    </div>
+
+    <h3 style="font-size: 14px; border-left: 3px solid var(--accent); padding-left: 10px;">Available Premium Apps</h3>
+    
+    <div class="variation-grid">
+        <a href="https://t.me/Zsnix_Rix" class="v-card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg">
+            <span style="font-size: 10px; display: block;">TG Premium</span>
+            <span class="v-price">53,000 Ks</span>
+        </a>
+        <a href="https://t.me/Zsnix_Rix" class="v-card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png">
+            <span style="font-size: 10px; display: block;">Netflix</span>
+            <span class="v-price">5,500 Ks</span>
+        </a>
+        <a href="https://t.me/Zsnix_Rix" class="v-card">
+            <img src="https://static.vecteezy.com/system/resources/previews/016/716/454/original/capcut-icon-free-png.png">
+            <span style="font-size: 10px; display: block;">CapCut Pro</span>
+            <span class="v-price">4,500 Ks</span>
+        </a>
+    </div>
 </div>
 
-<div class="category-title">Entertainment</div>
-<div class="variation-grid">
-    <a href="https://t.me/Zsnix_Rix?text=Netflix 1 Month ဝယ်ချင်လို့ပါ" class="v-card">
-        <div class="badge">1 🎁</div>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
-        <span class="v-name">Netflix 1 Month</span>
-        <span class="v-price">5500 ကျပ်</span>
-    </a>
-    <a href="https://t.me/Zsnix_Rix?text=YouTube Premium 1 Month ဝယ်ချင်လို့ပါ" class="v-card">
-        <div class="badge">1 🎁</div>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube">
-        <span class="v-name">YouTube 1 Month</span>
-        <span class="v-price">3500 ကျပ်</span>
-    </a>
-    <a href="https://t.me/Zsnix_Rix?text=Spotify 1 Month ဝယ်ချင်လို့ပါ" class="v-card">
-        <div class="badge">1 🎁</div>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify">
-        <span class="v-name">Spotify 1 Month</span>
-        <span class="v-price">2500 ကျပ်</span>
-    </a>
-</div>
+<script>
+    function login(role) {
+        const user = document.getElementById('username').value;
+        const pass = document.getElementById('password').value;
 
-<div class="footer">
-    Developed by Zsnix Studio © 2026
-</div>
+        if (user === "") {
+            alert("နာမည်ရိုက်ထည့်ပါ!");
+            return;
+        }
+
+        if (role === 'owner') {
+            if (pass === "zsnix123") { // Owner Password က zsnix123 ပါ
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                document.getElementById('display-name').innerText = "Owner: " + user;
+            } else {
+                alert("Owner Password မှားနေပါတယ်!");
+            }
+        } else {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('display-name').innerText = "User: " + user;
+        }
+    }
+</script>
 
 </body>
 </html>
