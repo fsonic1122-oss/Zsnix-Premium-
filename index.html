@@ -3,44 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zsnix Studio - Dynamic Store</title>
+    <title>Zsnix Studio - Fixed Version</title>
     <style>
         :root { --bg: #0d1117; --glass: #161b22; --accent: #00f2ff; --owner: #ff007a; }
         body { background: var(--bg); color: white; font-family: sans-serif; margin: 0; padding-bottom: 50px; }
         
-        /* Header */
         .header { padding: 15px; background: #010409; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #30363d; position: sticky; top: 0; z-index: 100; }
-        .balance { border: 1px solid #30363d; padding: 5px 12px; border-radius: 6px; font-size: 14px; }
+        .balance { border: 1px solid #30363d; padding: 5px 12px; border-radius: 6px; font-size: 14px; background: var(--glass); }
 
-        /* Login */
         #login-screen { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 1000; }
         .login-box { background: var(--glass); padding: 30px; border-radius: 15px; text-align: center; width: 85%; max-width: 320px; border: 1px solid #30363d; }
         input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #30363d; background: #0d1117; color: white; box-sizing: border-box; }
+        
         .btn { width: 100%; padding: 12px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
         .btn-user { background: var(--accent); color: #000; }
         .btn-owner { background: var(--owner); color: #fff; }
 
-        /* Admin Panel */
         #admin-panel { background: #1c101d; border: 1px solid var(--owner); margin: 15px; padding: 15px; border-radius: 12px; display: none; }
 
-        /* Grid Layout */
         .container { padding: 15px; }
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .card { background: var(--glass); border-radius: 12px; padding: 10px; text-align: center; border: 1px solid #30363d; position: relative; }
-        .card img { width: 45px; height: 45px; border-radius: 10px; margin-bottom: 5px; }
-        .card-name { font-size: 10px; display: block; height: 25px; overflow: hidden; }
-        .card-price { color: #fbbf24; font-size: 11px; font-weight: bold; }
-        .buy-link { text-decoration: none; color: white; }
-        .delete-btn { position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 10px; border: none; display: none; }
+        
+        /* Card Styling */
+        .card { background: var(--glass); border-radius: 12px; padding: 10px; text-align: center; border: 1px solid #30363d; position: relative; overflow: hidden; }
+        .card img { 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 10px; 
+            margin-bottom: 8px; 
+            object-fit: cover; /* ပုံတွေ မပြဲသွားအောင် */
+            display: block; 
+            margin-left: auto; 
+            margin-right: auto;
+        }
+        .card-name { font-size: 10px; display: block; color: #e2e8f0; height: 25px; line-height: 1.2; overflow: hidden; }
+        .card-price { color: #fbbf24; font-size: 11px; font-weight: bold; display: block; margin-top: 5px; }
+        .buy-link { text-decoration: none; color: inherit; }
+        
+        .delete-btn { 
+            position: absolute; top: 2px; right: 2px; 
+            background: rgba(255,0,0,0.8); color: white; 
+            border-radius: 50%; width: 18px; height: 18px; 
+            font-size: 10px; border: none; z-index: 10; cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
 <div id="login-screen">
     <div class="login-box">
-        <h2 style="color: var(--accent);">ZSNIX STUDIO</h2>
-        <input type="text" id="username" placeholder="Enter Name">
-        <input type="password" id="password" placeholder="Password (for Owner)">
+        <h2 style="color: var(--accent); margin-top: 0;">ZSNIX STUDIO</h2>
+        <input type="text" id="username" placeholder="နာမည်ရိုက်ပါ">
+        <input type="password" id="password" placeholder="Owner Password">
         <button class="btn btn-user" onclick="handleLogin('user')">User Login</button>
         <button class="btn btn-owner" onclick="handleLogin('owner')">Owner Login</button>
     </div>
@@ -48,36 +62,35 @@
 
 <div class="header">
     <div class="balance">0 ကျပ်</div>
-    <div id="user-display" style="font-weight: bold; color: var(--accent);">Guest</div>
-    <button onclick="location.reload()" style="background:none; border:1px solid #444; color:#888; border-radius:4px; font-size:10px;">Logout</button>
+    <div id="user-display" style="font-weight: bold; color: var(--accent);">Zsnix User</div>
+    <button onclick="location.reload()" style="background:none; border:1px solid #444; color:#888; border-radius:4px; font-size:10px; cursor:pointer;">Logout</button>
 </div>
 
 <div id="admin-panel">
     <h4 style="margin:0 0 10px 0; color:var(--owner);">Owner Controls</h4>
     <input type="text" id="new-app-name" placeholder="App Name (e.g. Netflix)">
-    <input type="text" id="new-app-price" placeholder="Price (e.g. 5000)">
+    <input type="text" id="new-app-price" placeholder="Price (e.g. 5500)">
     <input type="text" id="new-app-img" placeholder="Image URL (Link)">
-    <button class="btn-owner" style="padding:8px; border-radius:5px; width:100%;" onclick="addApp()">+ ပစ္စည်းအသစ်ထည့်မည်</button>
-    <p style="font-size: 10px; color: #888; margin-top: 10px;">* ပစ္စည်းဖျက်ချင်ရင် ကဒ်ဘေးက (x) ကိုနှိပ်ပါ။</p>
+    <button class="btn-owner" style="padding:10px; border-radius:8px; width:100%; border:none; font-weight:bold;" onclick="addApp()">+ ပစ္စည်းအသစ်ထည့်မည်</button>
 </div>
 
 <div class="container">
-    <h3 style="font-size: 14px; border-left: 3px solid var(--accent); padding-left: 10px;">PREMIUM APPS</h3>
-    <div class="grid" id="product-grid">
-        </div>
+    <h3 style="font-size: 14px; border-left: 3px solid var(--accent); padding-left: 10px; color: #cbd5e1;">AVAILABLE APPS</h3>
+    <div class="grid" id="product-grid"></div>
 </div>
 
 <script>
     let currentRole = 'user';
+    // localStorage ကနေ ဒေတာယူ၊ မရှိရင် Default ၂ ခုပြမယ်
     let apps = JSON.parse(localStorage.getItem('zsnix_apps')) || [
-        { name: "Telegram Premium", price: "53000", img: "https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" },
-        { name: "Netflix Premium", price: "5500", img: "https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" }
+        { name: "Telegram Premium", price: "53,000", img: "https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" },
+        { name: "Netflix Premium", price: "5,500", img: "https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" }
     ];
 
     function handleLogin(role) {
         const name = document.getElementById('username').value;
         const pass = document.getElementById('password').value;
-        if(!name) return alert("နာမည်ထည့်ပါ");
+        if(!name) return alert("ကျေးဇူးပြု၍ နာမည်ထည့်ပါ");
 
         if(role === 'owner') {
             if(pass === "zsnix123") {
@@ -93,46 +106,60 @@
 
     function renderApps() {
         const grid = document.getElementById('product-grid');
-        grid.innerHTML = '';
+        grid.innerHTML = ''; // အရင်ရှိတဲ့ ပုံဟောင်းတွေကို အကုန်ရှင်းထုတ်ပစ်တာ (ဒါမှ နှစ်ခုမဖြစ်မှာ)
+
         apps.forEach((app, index) => {
-            grid.innerHTML += `
-                <div class="card">
-                    <button class="delete-btn" style="display:${currentRole === 'owner' ? 'block' : 'none'}" onclick="deleteApp(${index})">x</button>
-                    <a href="https://t.me/Zsnix_Rix?text=${app.name} ဝယ်ချင်လို့ပါ" class="buy-link">
-                        <img src="${app.img}">
-                        <span class="card-name">${app.name}</span>
-                        <span class="card-price">${app.price} Ks</span>
-                    </a>
-                </div>
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            // Delete Button (Owner အတွက်သာ)
+            let deleteBtn = '';
+            if(currentRole === 'owner') {
+                deleteBtn = `<button class="delete-btn" onclick="deleteApp(${index})">x</button>`;
+            }
+
+            card.innerHTML = `
+                ${deleteBtn}
+                <a href="https://t.me/Zsnix_Rix?text=${encodeURIComponent(app.name)} ဝယ်ချင်လို့ပါ" class="buy-link">
+                    <img src="${app.img}" onerror="this.src='https://via.placeholder.com/50?text=No+Image'">
+                    <span class="card-name">${app.name}</span>
+                    <span class="card-price">${app.price} Ks</span>
+                </a>
             `;
+            grid.appendChild(card);
         });
     }
 
     function addApp() {
         const name = document.getElementById('new-app-name').value;
         const price = document.getElementById('new-app-price').value;
-        const img = document.getElementById('new-app-img').value || "https://via.placeholder.com/100";
+        const img = document.getElementById('new-app-img').value;
 
-        if(name && price) {
+        if(name && price && img) {
             apps.push({ name, price, img });
             localStorage.setItem('zsnix_apps', JSON.stringify(apps));
             renderApps();
+            // Input တွေကို ပြန်ရှင်းမယ်
+            document.getElementById('new-app-name').value = '';
+            document.getElementById('new-app-price').value = '';
+            document.getElementById('new-app-img').value = '';
             alert("ပစ္စည်းအသစ် ထည့်ပြီးပါပြီ။");
+        } else {
+            alert("အချက်အလက် အကုန်ဖြည့်ပါ (ပုံ Link ပါရပါမယ်)");
         }
     }
 
     function deleteApp(index) {
-        if(confirm("ဖျက်မှာ သေချာပါသလား?")) {
+        if(confirm("ဒီပစ္စည်းကို ဖျက်မှာ သေချာပါသလား?")) {
             apps.splice(index, 1);
             localStorage.setItem('zsnix_apps', JSON.stringify(apps));
             renderApps();
         }
     }
 
-    // Initial Load
+    // စစဖွင့်ချင်း user တွေအတွက် ပုံပေါ်အောင်လုပ်ထားတာ
     renderApps();
 </script>
 
 </body>
 </html>
-
